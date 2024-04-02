@@ -1,5 +1,30 @@
-function() {
-    var langcode = {{Click ID}};
+// href has __doPOstBack() .NET function. We don't need it for this demo and it causes errors.
+function __doPostBack() {
+// Do nothing.
+}
+
+// I'm not sure if this is necessary for GA but I need it for `var langcode = {{Click ID}};`
+//  to work in the browser for testing/debugging.
+
+
+// Get an HTMLCollection of all the links in the DOM (Not recommended for production.)
+const links = document.getElementsByTagName("a");
+
+// Loop through each <a> tag in the Collection.
+Array.from(links).forEach((link) => {
+    // Get id of each link.
+    linkClickid = link.getAttribute('id')
+    // Pass that id into the gitLang function.
+    link.onclick = getLang(linkClickid);
+})
+
+
+/* Important code starts here */
+
+function getLang(linkClickid) {
+    // var langcode = {{Click ID}};
+    var langcode = linkClickid;
+
     var lang = 'None';
     // English view
     if(langcode == "languageSelectorEnglish"){
@@ -148,3 +173,5 @@ function() {
 
     return lang;
 }
+
+
